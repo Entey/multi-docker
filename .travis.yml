@@ -11,14 +11,14 @@ script:
   - docker run -e CI=true entey/react-test npm test -- --coverage
 
 after_success:
-  - docker build -t entey/multi-client ./client
-  - docker build -t entey/multi-nginx ./nginx
-  - docker build -t entey/multi-server ./server
-  - docker build -t entey/multi-worker ./worker
+  - docker build -t "$DOCKER_ID"/multi-client ./client
+  - docker build -t "$DOCKER_ID"/multi-nginx ./nginx
+  - docker build -t "$DOCKER_ID"/multi-server ./server
+  - docker build -t "$DOCKER_ID"/multi-worker ./worker
   # Log in to the docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   # Take those images and push them to docker hub
-  - docker push entey/multi-client
-  - docker push entey/multi-nginx
-  - docker push entey/multi-server
-  - docker push entey/multi-worker
+  - docker push "$DOCKER_ID"/multi-client
+  - docker push "$DOCKER_ID"/multi-nginx
+  - docker push "$DOCKER_ID"/multi-server
+  - docker push "$DOCKER_ID"/multi-worker
